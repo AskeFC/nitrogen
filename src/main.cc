@@ -233,7 +233,7 @@ int main (int argc, char ** argv) {
         }
 
         main_window->view.set_sort_mode (mode);
-    }
+    } else { main_window->view.set_sort_mode(cfg->get_sort_mode()); }
 
     // remove parser
     delete parser;
