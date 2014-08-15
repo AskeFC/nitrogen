@@ -34,8 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // leethax constructor
 
-#NWindow::NWindow(SetBG* bg_setter) : apply (Gtk::Stock::APPLY), btn_prefs(Gtk::Stock::PREFERENCES) {
-NWindow::NWindow (void) : apply (Gtk::Stock::APPLY), is_multihead(false), is_xinerama(false), btn_prefs(Gtk::Stock::PREFERENCES), btn_back(Gtk::Stock::GO_BACK), btn_forward(Gtk::Stock::GO_FORWARD) {
+NWindow::NWindow (SetBG* bg_setter) : apply (Gtk::Stock::APPLY), btn_prefs(Gtk::Stock::PREFERENCES), btn_back(Gtk::Stock::GO_BACK), btn_forward(Gtk::Stock::GO_FORWARD) {
     this->bg_setter = bg_setter;
 	set_border_width (5);
 	set_default_size (450, 500);
@@ -135,7 +134,7 @@ void NWindow::show (void) {
     select_mode.show();
     // show only if > 1 entry in box
     if (this->map_displays.size() > 1) select_display.show();
-	else if ( this->is_multihead ) select_display.show();
+//	else if ( this->is_multihead ) select_display.show();
     apply.show();
     bot_hbox.show();
     top_hbox.show ();
