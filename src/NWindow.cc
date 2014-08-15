@@ -70,8 +70,8 @@ NWindow::NWindow (SetBG* bg_setter) : apply (Gtk::Stock::APPLY), btn_prefs(Gtk::
 	bot_hbox.pack_start (select_mode, FALSE, FALSE, 0);
 	bot_hbox.pack_start (select_display, FALSE, FALSE, 0);
 	bot_hbox.pack_start(button_bgcolor, FALSE, FALSE, 0);
-	
-	bot_hbox.pack_end(chk_btn_flip, FALSE, FALSE, 0);
+	bot_hbox.pack_start(chk_btn_flip, FALSE, FALSE, 0);
+
 	bot_hbox.pack_end(apply, FALSE, FALSE, 0);
 	bot_hbox.pack_end(btn_prefs, FALSE, FALSE, 0);
 
