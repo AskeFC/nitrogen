@@ -153,11 +153,6 @@ bool Config::get_bg(const Glib::ustring disp, Glib::ustring &file, SetBG::SetMod
 	}
 
 	flip = g_key_file_get_boolean(kf, disp.c_str(), "flip", &ge);
-	if(flip) {
-		g_debug("Retrieved key flip : TRUE");
-	} else {
-		g_debug("FALSE or unknown gboolean");
-	}
 
 	// did not fail
 	// Glib::ustring tcol(color);

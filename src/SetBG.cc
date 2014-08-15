@@ -495,8 +495,6 @@ void SetBG::restore_bgs()
         {
             if (cfg->get_bg(*i, file, mode, bgcolor, flip)) {
                 this->set_bg((*i), file, mode, bgcolor, flip);
-                if(flip) g_debug("FLIP IZZ TRUE!");
-                else g_debuf("FLIP NAUGHT TRUE!");
             } else {
                 std::cerr << _("ERROR") << std::endl;
             }
@@ -504,8 +502,6 @@ void SetBG::restore_bgs()
     } else {
         if (cfg->get_bg(*i, file, mode, bgcolor, flip)) {
             this->set_bg((*i), file, mode, bgcolor, flip);
-			if(flip) g_debug("FLIP IZZ TRUE!");
-			else g_debuf("FLIP NAUGHT TRUE!");
         } else {
             std::cerr << _("ERROR") << std::endl;
         }
@@ -588,7 +584,6 @@ bool SetBG::set_bg(Glib::ustring &disp, Glib::ustring file, SetMode mode, Gdk::C
 	// Flip image horizontally if set to
 	if(flip) {
 		outpixbuf = outpixbuf->flip(true);
-		g_debug("Flipping image.");
 	}
 
     // render it to the pixmap

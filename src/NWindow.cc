@@ -267,12 +267,6 @@ void NWindow::set_bg(const Glib::ustring file) {
 	Gdk::Color bgcolor    = this->button_bgcolor.get_color();
 	bool flip = this->chk_btn_flip.get_active();
 
-	if(flip) {
-		g_debug("Is to be flipped.");
-	} else {
-		g_debug("Not to be flipped.");
-	}
-
 	// set it
     bg_setter->set_bg(thedisp, file, mode, bgcolor, flip);
 }
