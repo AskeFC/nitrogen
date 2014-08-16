@@ -74,13 +74,14 @@ void Watch::poll(suseconds_t timeout) {
 	// process events
 	ssize_t i = 0;
 	while(i < size) {
-		uint32_t wd = *((uint32_t*)&buffer[i]);
+		uint32_t wd = static_cast<uint32_t>(buffer[i]);
+//		uint32_t wd = *((uint32_t*)&buffer[i]);
 		i += sizeof(uint32_t);
-		uint32_t mask = *((uint32_t*)&buffer[i]);
+		uint32_t mask = static_cast<uint32_t>(buffer[i]);
 		i += sizeof(uint32_t);
 		//uint32_t cookie = buffer[i];
 		i += sizeof(uint32_t);
-		uint32_t len = *((uint32_t*)&buffer[i]);
+		uint32_t len = static_cast<uint32_t>(buffer[i]);
 		i += sizeof(uint32_t);
 		std::string name(&buffer[i], len);
 		i += len;

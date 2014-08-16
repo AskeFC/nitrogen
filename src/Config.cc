@@ -208,25 +208,21 @@ bool Config::set_bg(const Glib::ustring disp, const Glib::ustring file, const Se
 
 	// must do complex removals if xinerama occurs
 	if (realdisp.find("xin_", 0, 4) != Glib::ustring::npos) {
-		
 		if (realdisp == "xin_-1") {
 			// get all keys, remove all keys that exist with xin_ prefixes
 			gchar **groups;
 			gsize num;
 			groups = g_key_file_get_groups(kf, &num);
-			for (int i=0; i<num; i++)
+			for (int i = 0, iEnd = static_cast<int>(num); i < iEnd; i++)
 				if (Glib::ustring(groups[i]).find("xin_", 0, 4) != Glib::ustring::npos)
 					g_key_file_remove_group(kf, groups[i], NULL);
-
 		} else {
-			
 			// a normal xinerama screen, therefore
 			// remove the big realdisp if it occurs
 			if (g_key_file_has_group(kf, "xin_-1"))
 				g_key_file_remove_group(kf, "xin_-1", NULL);
 		}
 	}
-
 
 	// set data
 	g_key_file_set_string(kf, realdisp.c_str(), "file", file.c_str());

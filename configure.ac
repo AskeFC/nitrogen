@@ -1,21 +1,22 @@
-AC_PREREQ(2.59)
+AC_PREREQ(2.69)
 AC_INIT([nitrogen],[1.5.3-alpha],[daf@minuslab.net])
-AM_INIT_AUTOMAKE
+AC_HEADER_STDC++
 AC_CONFIG_HEADER(config.h)
 AC_ISC_POSIX
-AC_HEADER_STDC++
 AC_PROG_CXX
 AC_PROG_RANLIB
 AC_PROG_INSTALL
 
-ALL_LINGUAS=""
-AM_GNU_GETTEXT_VERSION(0.16)
-AM_GNU_GETTEXT([external])
-AC_DEFINE_UNQUOTED(LOCALEDIR, "${prefix}/${DATADIRNAME}/locale", [Name of gettext locale directory])
-
 AC_LANG([C++])
 AC_LANG_COMPILER_REQUIRE
 AC_HEADER_STDC([])
+
+AM_INIT_AUTOMAKE
+
+ALL_LINGUAS=""
+AM_GNU_GETTEXT_VERSION(0.19)
+AM_GNU_GETTEXT([external])
+AC_DEFINE_UNQUOTED(LOCALEDIR, "${prefix}/${DATADIRNAME}/locale", [Name of gettext locale directory])
 
 dnl
 dnl Our depend list

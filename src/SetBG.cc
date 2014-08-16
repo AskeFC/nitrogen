@@ -196,16 +196,16 @@ Glib::RefPtr<Gdk::Pixbuf> SetBG::make_tile(const Glib::RefPtr<Gdk::Pixbuf> orig,
 	unsigned count = 0;
 	
 	// copy across horizontally first
-	unsigned iterations = (unsigned)ceil((double)winw / (double)orig_width);
+	unsigned iterations = static_cast<unsigned int>(ceil(static_cast<double>(winw) / static_cast<double>(orig_width)));
 	for (count = 0; count < iterations; count++) {
-		orig->copy_area(0, 0, ((count + 1) * orig_width) > winw ? orig_width - (((count+1) * orig_width) - winw) : orig_width, orig_height, retval, count * orig_width, 0);
+		orig->copy_area(0, 0, static_cast<int>((count + 1) * orig_width) > winw ? orig_width - (((count+1) * orig_width) - winw) : orig_width, orig_height, retval, count * orig_width, 0);
 	}
 
 	// now vertically
-	iterations = (unsigned)ceil((double)winh / (double)orig_height);
+	iterations = static_cast<unsigned int>(ceil(static_cast<double>(winh) / static_cast<double>(orig_height)));
 	// start at 1 because the first real (0) iteration is already done from before (it's the source of our copy!)
 	for (count = 1; count < iterations; count++) {
-		retval->copy_area(0, 0, winw, ((count+ 1)*orig_height) > winh ? orig_height - (((count+1) * orig_height) - winh) : orig_height, retval, 0, count * orig_height);
+		retval->copy_area(0, 0, winw, static_cast<int>((count+ 1)*orig_height) > winh ? orig_height - (((count+1) * orig_height) - winh) : orig_height, retval, 0, count * orig_height);
 	}
 			
 	return retval;

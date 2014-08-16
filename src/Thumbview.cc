@@ -556,7 +556,7 @@ void Thumbview::create_cache_images()
 		time_t mtime = get_file_mtime(file);
 
 		char *bufout = new char[20];
-		sprintf(bufout, "%d", mtime);
+		sprintf(bufout, "%lu", mtime);
 
 		opts.push_back(Glib::ustring("tEXt::Thumb::MTime"));
 		vals.push_back(Glib::ustring(bufout));
