@@ -1,6 +1,5 @@
 /*
-
-This file is from Nitrogen, an X11 background setter.  
+This file is from Nitrogen, an X11 background setter.
 Copyright (C) 2009  Dave Foster & Javeed Shaikh
 
 This program is free software; you can redistribute it and/or
@@ -16,7 +15,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
 */
 
 #ifndef _NPREFSWINDOW_H_
@@ -25,30 +23,28 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "main.h"
 #include "Config.h"
 
-class NPrefsWindow : public Gtk::Dialog 
-{
-    public:
-        NPrefsWindow(Gtk::Window& parent, Config* cfg);
-        virtual ~NPrefsWindow() {}
+class NPrefsWindow : public Gtk::Dialog {
+	public:
+		NPrefsWindow(Gtk::Window& parent, Config* cfg);
+		virtual ~NPrefsWindow() {};
 
-    protected:
-        virtual void on_response(int response_id);
-    protected:
-        Config* m_cfg;
+	protected:
+		virtual void on_response(int response_id);
+
+		Config* m_cfg;
 
 		Glib::RefPtr<Gtk::Builder> builder;
 
 		Gtk::ComboBoxText view_type;
 		Gtk::ComboBoxText sort;
 
-        // handlers
-        void sighandle_click_adddir();
-        void sighandle_click_deldir();
+		// handlers
+		void sighandle_click_adddir();
+		void sighandle_click_deldir();
 
-        // tree view noise
+		// tree view noise
 		Gtk::TreeView * m_list_dirs;
-        Glib::RefPtr<Gtk::ListStore> m_store_dirs;
-        Gtk::TreeModelColumn<std::string> m_tmc_dir;
+		Glib::RefPtr<Gtk::ListStore> m_store_dirs;
+		Gtk::TreeModelColumn<std::string> m_tmc_dir;
 };
-
 #endif

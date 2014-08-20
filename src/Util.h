@@ -1,6 +1,5 @@
 /*
-
-This file is from Nitrogen, an X11 background setter.  
+This file is from Nitrogen, an X11 background setter.
 Copyright (C) 2006  Dave Foster & Javeed Shaikh
 
 This program is free software; you can redistribute it and/or
@@ -16,7 +15,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
 */
 
 #ifndef _UTIL_H_
@@ -27,15 +25,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <gtkmm.h>
 
 namespace Util {
-
 	void program_log(const char *format, ...);
 	Glib::ustring path_to_abs_path(Glib::ustring path);
 	ArgParser* create_arg_parser();
 	std::string fix_start_dir(std::string startdir);
 
-    bool is_display_relevant(Gtk::Window* window, Glib::ustring display);
-    Glib::ustring make_current_set_string(Gtk::Window* window, Glib::ustring filename, Glib::ustring display);
-}
-
+	bool is_display_relevant(Gtk::Window* window, Glib::ustring display);
+	Glib::ustring make_current_set_string(Gtk::Window* window, Glib::ustring filename, Glib::ustring display);
+};
 #endif
-

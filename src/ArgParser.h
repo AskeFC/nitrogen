@@ -1,6 +1,5 @@
 /*
-
-This file is from Nitrogen, an X11 background setter.  
+This file is from Nitrogen, an X11 background setter.
 Copyright (C) 2006  Dave Foster & Javeed Shaikh
 
 This program is free software; you can redistribute it and/or
@@ -16,7 +15,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
 */
 
 #ifndef _ARGPARSER_H_
@@ -30,30 +28,29 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Arg {
 	public:
-		Arg (	std::string desc = "", 
-			bool has_arg = false) {
+		Arg(std::string desc = "", bool has_arg = false) {
 			set_desc (desc);
 			set_has_arg (has_arg);
-		}
+		};
 
-		std::string get_desc (void) const {
+		std::string get_desc(void) const {
 			return desc;
-		}
-		
-		bool get_has_arg (void) const {
-			return has_arg;
-		}
-		
-		void set_desc (std::string desc) {
-			this->desc = desc;
-		}
+		};
 
-		void set_has_arg (bool has_arg) {
+		bool get_has_arg(void) const {
+			return has_arg;
+		};
+
+		void set_desc(std::string desc) {
+			this->desc = desc;
+		};
+
+		void set_has_arg(bool has_arg) {
 			this->has_arg = has_arg;
-		}
-	
-		~Arg () {};
-	
+		};
+
+		~Arg() {};
+
 	protected:
 		std::string desc;
 		bool has_arg;
@@ -61,77 +58,71 @@ class Arg {
 
 class ArgParser {
 	public:
-		ArgParser (void) {
-			register_option ("help, -h", "Prints this help text.");
+		ArgParser(void) {
+			register_option("help, -h", "Prints this help text.");
 		};
-		~ArgParser () {};
+		~ArgParser() {};
 
 		// adds a valid option.
-		inline void register_option (std::string name, std::string desc = "", bool has_arg = false) {
+		inline void register_option(std::string name, std::string desc = "", bool has_arg = false) {
 			expected_args[name] = Arg(desc, has_arg);
-		}
-		
+		};
+
 		// makes two or more options mutually exclusive (only one or the other.)
-		inline void make_exclusive (std::vector<std::string> exclusive_opts) {
+		inline void make_exclusive(std::vector<std::string> exclusive_opts) {
 			exclusive.push_back (exclusive_opts);
-		}
-		
+		};
+
 		// returns the parsed map.
-		inline std::map<std::string, std::string> get_map (void) const {
+		inline std::map<std::string, std::string> get_map(void) const {
 			return received_args;
-		}
+		};
 
 		// returns all errors.
-		inline std::string get_error (void) const {
+		inline std::string get_error(void) const {
 			return error_str;
-		}
-	
-		inline std::string get_extra_args (void) const {
+		};
+
+		inline std::string get_extra_args(void) const {
 			return extra_arg_str;
-		}
-	
-		inline bool has_argument (std::string option) {
-			if (received_args.find (option) != received_args.end ()) {
+		};
+
+		inline bool has_argument(std::string option) {
+			if(received_args.find(option) != received_args.end()) {
 				return true;
-			}
+			};
 			return false;
-		}
-	
-		inline std::string get_value (std::string key) {
-			std::map<std::string, std::string>::const_iterator iter = received_args.find (key);
-			if (iter != received_args.end ()) {
-				// key exists.
+		};
+
+		inline std::string get_value(std::string key) {
+			std::map<std::string, std::string>::const_iterator iter = received_args.find(key);
+			if(iter != received_args.end()) { // key exists.
 				return iter->second;
-			}
+			};
+			return std::string(); // key doesn't exist.
+		};
 
-			// key doesn't exist.
-			return std::string ();
-		}
+		inline int get_intvalue(std::string key) {
+			std::stringstream stream;
+			std::string tmp_str = this->get_value(key);
+			int tmp_int;
+			stream << tmp_str;
+			stream >> tmp_int;
+			return tmp_int;
+		};
 
-                inline int get_intvalue (std::string key) {
-                        std::stringstream stream;
-                        std::string tmp_str = this->get_value(key);
-                        int tmp_int;
-
-                        stream << tmp_str;
-                        stream >> tmp_int;
-                        return tmp_int;
-                }
-		
 		// parses away.
-		bool parse (int argc, char ** argv);
+		bool parse(int argc, char ** argv);
 
 		// returns the help text (--help)
-		std::string help_text (void) const;
+		std::string help_text(void) const;
 
 	protected:
 		// checks if the supplied key conflicts with an existing key.
-		bool conflicts (std::string key);
-	
-		std::string error_str, extra_arg_str;	
+		bool conflicts(std::string key);
+		std::string error_str, extra_arg_str;
 		std::map<std::string, std::string> received_args;
 		std::map<std::string, Arg> expected_args;
 		std::vector< std::vector<std::string> > exclusive;
 };
-
 #endif

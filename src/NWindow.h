@@ -1,6 +1,5 @@
 /*
-
-This file is from Nitrogen, an X11 background setter.  
+This file is from Nitrogen, an X11 background setter.
 Copyright (C) 2006  Dave Foster & Javeed Shaikh
 
 This program is free software; you can redistribute it and/or
@@ -16,7 +15,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
 */
 
 #ifndef _NWINDOW_H_
@@ -28,67 +26,65 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "SetBG.h"
 
 class NWindow : public Gtk::Window {
-    public:
-        NWindow(SetBG* bg_setter);
-        void show (void);
-        virtual ~NWindow ();
+	public:
+		NWindow(SetBG* bg_setter);
+		void show(void);
+		virtual ~NWindow();
 
-        Thumbview view;
-        void sighandle_dblclick_item(const Gtk::TreeModel::Path& path);
-        void sighandle_click_apply(void);
-        void sighandle_mode_change(void);
+		Thumbview view;
+		void sighandle_dblclick_item(const Gtk::TreeModel::Path& path);
+		void sighandle_click_apply(void);
+		void sighandle_mode_change(void);
 
-        void set_default_selections();
+		void set_default_selections();
 
-        std::map<Glib::ustring, Glib::ustring> map_displays;        // a map of current displays on the running instance to their display names
-        void set_default_display(int display);
+		std::map<Glib::ustring, Glib::ustring> map_displays; // a map of current displays on the running instance to their display names
+		void set_default_display(int display);
 
-        void set_bg(Glib::ustring file);
+		void set_bg(Glib::ustring file);
 
-    protected:        
-        Glib::RefPtr<Gtk::ActionGroup> m_action_group;
-        Glib::RefPtr<Gtk::UIManager> m_ui_manager;
-        Gtk::VBox main_vbox;
-        Gtk::HBox bot_hbox, top_hbox;
-        SetBG* bg_setter;
+	protected:
+		Glib::RefPtr<Gtk::ActionGroup> m_action_group;
+		Glib::RefPtr<Gtk::UIManager> m_ui_manager;
+		Gtk::VBox main_vbox;
+		Gtk::HBox bot_hbox, top_hbox;
+		SetBG* bg_setter;
 
-        ImageCombo select_mode, select_display;
+		ImageCombo select_mode, select_display;
 
-        Gtk::CheckButton chk_btn_flip;
-        Gtk::Button apply;
-        Gtk::Button btn_prefs;
+		Gtk::CheckButton chk_btn_flip;
+		Gtk::Button apply;
+		Gtk::Button btn_prefs;
 		Gtk::ColorButton button_bgcolor;
-        Gtk::Button btn_back;
-        Gtk::Button btn_forward;
-        Gtk::Button btn_random;
-        Gtk::Image img_random;
+		Gtk::Button btn_back;
+		Gtk::Button btn_forward;
+		Gtk::Button btn_random;
+		Gtk::Image img_random;
 
-        bool m_dirty;       // set if the user double clicks to preview but forgets to press apply
+		bool m_dirty; // set if the user double clicks to preview but forgets to press apply
 
-        void setup_select_boxes();
+		void setup_select_boxes();
 
-        void sighandle_accel_quit();
-        void sighandle_togb_list_toggled();
-        void sighandle_togb_icon_toggled();
-        void sighandle_btn_prefs();
+		void sighandle_accel_quit();
+		void sighandle_togb_list_toggled();
+		void sighandle_togb_icon_toggled();
+		void sighandle_btn_prefs();
 
-        virtual bool on_delete_event(GdkEventAny *event);
-        
-        std::vector<Gtk::TreeModel::iterator> vec_history;
-        std::vector<Gtk::TreeModel::iterator>::iterator history_cur;
+		virtual bool on_delete_event(GdkEventAny *event);
 
-        void history_add(Gtk::TreeModel::iterator it);
-        void history_back(void);
-        void history_forward(void);
-        void history_update_buttons();
+		std::vector<Gtk::TreeModel::iterator> vec_history;
+		std::vector<Gtk::TreeModel::iterator>::iterator history_cur;
 
-        void random(void);
+		void history_add(Gtk::TreeModel::iterator it);
+		void history_back(void);
+		void history_forward(void);
+		void history_update_buttons();
 
-#ifdef USE_XINERAMA
-	// xinerama stuff
+		void random(void);
+
+#ifdef USE_XINERAMA // xinerama stuff
 	XineramaScreenInfo* xinerama_info;
 	gint xinerama_num_screens;
 #endif
 };
-
 #endif
