@@ -12,8 +12,8 @@ AC_PROG_INSTALL
 AC_LANG([C++])
 AC_LANG_COMPILER_REQUIRE
 
-CFLAGS+=" -Wall -march=native -Ofast -std=c11 -fopenmp -fsigned-char -fsigned-bitfields -flto -fwhole-program -fPIC -rdynamic"
-CXXFLAGS+=" -Wall -march=native -Ofast -std=gnu++1y -fopenmp -fsigned-char -fsigned-bitfields -flto -fwhole-program -fPIC"
+CFLAGS+=" -floop-nest-optimize -floop-parallelize-all -free -fopenmp-simd -fexpensive-optimizations -march=native -m64 -Wall -march=native -Ofast -std=c11 -fopenmp -fsigned-char -fsigned-bitfields -flto -fwhole-program -fPIC -rdynamic -lpthread -pthread"
+CXXFLAGS+=" -floop-nest-optimize -floop-parallelize-all -free -fopenmp-simd -fexpensive-optimizations -march=native -m64 -Wall -march=native -Ofast -std=gnu++1y -fopenmp -fsigned-char -fsigned-bitfields -flto -fwhole-program -fPIC -rdynamic -lpthread -pthread"
 
 AC_SUBST(NITROGEN_LIBS)
 AC_SUBST(NITROGEN_CFLAGS)
@@ -44,25 +44,24 @@ PKG_CHECK_MODULES(X11, x11)
 NITROGEN_LIBS="$GLIB2_LIBS $GTK2_LIBS $GTKMM2_LIBS $GTHREAD2_LIBS $X11_LIBS"
 NITROGEN_CFLAGS="$GLIB2_CFLAGS $GTK2_CFLAGS $GTKMM2_CFLAGS $GTHREAD2_CFLAGS $X11_CFLAGS"
 
+dnl checking whether debugging is enabled
+AC_ARG_ENABLE(debug, [  --enable-debug       enable debugging flags ])
+if test "$enable_debug" = "yes"; then
+	CXXFLAGS+=" -g -g3 -ggdb -DDEBUG"; else
+	LDFLAGS+=" -s -g"
+fi
+
 dnl apparently we have to check for X11 now
 AC_CHECK_LIB(X11, XOpenDisplay, [NITROGEN_LIBS="$NITROGEN_LIBS -lX11"])
 
 dnl do some autotools picen to get inotify
 AC_ARG_ENABLE(inotify, [  --disable-inotify       disable support for inotify watching of dirs (default: enabled)], [enable_inotify=$enableval],[enable_inotify=yes])
-
-AC_ARG_ENABLE(debug, [  --enable-debug       enable debugging flags ])
-
-if test "$enable_debug" = "yes"; then
-	CXXFLAGS+=" -g -g3 -ggdb -DDEBUG"
-fi
-
 if test x$enable_inotify = xyes; then
 	AC_DEFINE(USE_INOTIFY, 1, [Define to enable inotify dir watching])
 fi
 
 dnl now do some proper checking for Xinerama
 AC_ARG_ENABLE(xinerama, [  --disable-xinerama      disable support for Xinerama (default: enabled)], [enable_xinerama=$enableval],[enable_xinerama=yes])
-
 if test x$enable_xinerama = xyes; then
 	AC_CHECK_LIB(Xinerama, XineramaQueryScreens, 
 	[AC_DEFINE(USE_XINERAMA, 1, [Define to enable Xinerama]) NITROGEN_LIBS="$NITROGEN_LIBS -lXinerama"],
