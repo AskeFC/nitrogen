@@ -6,14 +6,17 @@ AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_CONFIG_HEADER(config.h)
 AC_HEADER_STDC
 AC_ISC_POSIX
+
+LD=ld.gold
+LDFLAGS+=" -s -Os -m64 -march=native -mtune=native -fPIC -DPIC -rdynamic -fopenmp -fopenmp-simd -ffast-math -fomit-frame-pointer -floop-nest-optimize -floop-parallelize-all -free -fsigned-char -fsigned-bitfields -flto -fuse-linker-plugin -fvisibility=hidden -fsanitize=undefined -freorder-functions -fdiagnostics-color=always -fpredictive-commoning -fgcse-after-reload -ftree-loop-vectorize -ftree-slp-vectorize -fvect-cost-model -ftree-partial-pre -fipa-cp-clone -fmodulo-sched -fmodulo-sched-allow-regmoves -fprofile-dir=/tmp/gcc-pgo/nitrogen"
+CFLAGS+=" -std=c11 -Wall -Os -m64 -march=native -mtune=native -fPIC -DPIC -rdynamic -fopenmp -fopenmp-simd -ffast-math -fomit-frame-pointer -floop-nest-optimize -floop-parallelize-all -free -fsigned-char -fsigned-bitfields -flto -fuse-linker-plugin -fvisibility=hidden -fsanitize=undefined -freorder-functions -fdiagnostics-color=always -fpredictive-commoning -fgcse-after-reload -ftree-loop-vectorize -ftree-slp-vectorize -fvect-cost-model -ftree-partial-pre -fipa-cp-clone -fmodulo-sched -fmodulo-sched-allow-regmoves -fprofile-dir=/tmp/gcc-pgo/nitrogen"
+CXXFLAGS+=" -std=c++1y -Wall -Os -m64 -march=native -mtune=native -fPIC -DPIC -rdynamic -fopenmp -fopenmp-simd -ffast-math -fomit-frame-pointer -floop-nest-optimize -floop-parallelize-all -free -fsigned-char -fsigned-bitfields -flto -fuse-linker-plugin -fvisibility=hidden -fsanitize=undefined -freorder-functions -fdiagnostics-color=always -fpredictive-commoning -fgcse-after-reload -ftree-loop-vectorize -ftree-slp-vectorize -fvect-cost-model -ftree-partial-pre -fipa-cp-clone -fmodulo-sched -fmodulo-sched-allow-regmoves -fprofile-dir=/tmp/gcc-pgo/nitrogen"
+
 AC_PROG_CXX
 AC_PROG_RANLIB
 AC_PROG_INSTALL
 AC_LANG([C++])
 AC_LANG_COMPILER_REQUIRE
-
-CFLAGS+=" -floop-nest-optimize -floop-parallelize-all -free -fopenmp-simd -fexpensive-optimizations -march=native -m64 -Wall -march=native -Ofast -std=c11 -fopenmp -fsigned-char -fsigned-bitfields -flto -fwhole-program -fPIC -rdynamic -lpthread -pthread"
-CXXFLAGS+=" -floop-nest-optimize -floop-parallelize-all -free -fopenmp-simd -fexpensive-optimizations -march=native -m64 -Wall -march=native -Ofast -std=gnu++1y -fopenmp -fsigned-char -fsigned-bitfields -flto -fwhole-program -fPIC -rdynamic -lpthread -pthread"
 
 AC_SUBST(NITROGEN_LIBS)
 AC_SUBST(NITROGEN_CFLAGS)
@@ -47,8 +50,9 @@ NITROGEN_CFLAGS="$GLIB2_CFLAGS $GTK2_CFLAGS $GTKMM2_CFLAGS $GTHREAD2_CFLAGS $X11
 dnl checking whether debugging is enabled
 AC_ARG_ENABLE(debug, [  --enable-debug       enable debugging flags ])
 if test "$enable_debug" = "yes"; then
-	CXXFLAGS+=" -g -g3 -ggdb -DDEBUG"; else
-	LDFLAGS+=" -s -g"
+	CXXFLAGS+=" -g -g3 -ggdb -DDEBUG";
+else
+	LDFLAGS+=" -s";
 fi
 
 dnl apparently we have to check for X11 now
